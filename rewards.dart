@@ -1,3 +1,4 @@
+  
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: new MyHomePage(),
+      home: new RealHome(),
     );
   }
 }
@@ -27,9 +28,6 @@ class MyCustomCard extends StatelessWidget {
 
   Widget build(BuildContext context) {
     if (colors == Colors.orange && id == _id) {
-      print('id inside this');
-      print(id);
-      print(_id);
       return new Container(
         alignment: FractionalOffset.center,
         decoration: new BoxDecoration(
@@ -42,8 +40,6 @@ class MyCustomCard extends StatelessWidget {
       );
     }
     if (colors == Colors.blue && _id == id) {
-      print('id inside this');
-      print(id);
       return new Container(
           alignment: FractionalOffset.center,
           decoration: new BoxDecoration(
@@ -63,9 +59,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-    print('The sid is');
-    print(sid);
     _controller = new AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -162,8 +155,15 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    return f(0);
+  }
+}
 
-    return new Scaffold(
+
+class RealHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: new AppBar(),
       body: new Center(
         child: GridView.count(
@@ -173,10 +173,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             mainAxisSpacing: 10,
             crossAxisCount: 2,
             children: <Widget>[
-              f(0),
-              f(1),
-              f(2),
-              f(3),
+              MyHomePage(),
+              MyHomePage(),
             ]),
       ),
     );
