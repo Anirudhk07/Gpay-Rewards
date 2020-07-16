@@ -1,20 +1,17 @@
-  
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
-  runApp(new MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new RealHome(),
-    );
-  }
+  runApp(
+    MaterialApp(
+      home: MyWidget(),
+    ),
+  );
 }
 
 int _id = 0;
+int count = 0;
+int y;
 
 class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => new MyHomePageState();
@@ -27,7 +24,7 @@ class MyCustomCard extends StatelessWidget {
   final id;
 
   Widget build(BuildContext context) {
-    if (colors == Colors.orange && id == _id) {
+    if (colors == Colors.blue && id == _id) {
       return new Container(
         alignment: FractionalOffset.center,
         decoration: new BoxDecoration(
@@ -39,14 +36,32 @@ class MyCustomCard extends StatelessWidget {
         ),
       );
     }
-    if (colors == Colors.blue && _id == id) {
+
+    String x = y.toString();
+    Random random = new Random();
+    int z = random.nextInt(2);
+    if (z == 1) {
       return new Container(
           alignment: FractionalOffset.center,
           decoration: new BoxDecoration(
-            color: colors.shade50,
+            color: Colors.white,
           ),
-          child: Text('Hello'));
+          child: Column(
+            children: <Widget>[
+              Image.network(
+                'https://i.ibb.co/wMV5ZgY/win.png',
+                height: 150,
+              ),
+              Text('You have won \$  ' + x),
+            ],
+          ));
     }
+    return new Container(
+        alignment: FractionalOffset.center,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Center(child: Text('Better Luck Next Time !')));
   }
 }
 
@@ -86,16 +101,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Stack(
       children: <Widget>[
         new GestureDetector(
-          onTap: () {
-            setState(() {
-              sid = i;
-              _id = sid;
-              if (_controller.isCompleted || _controller.velocity > 0)
-                _controller.reverse();
-              else
-                _controller.forward();
-            });
-          },
           child: new AnimatedBuilder(
             child: new MyCustomCard(
               colors: Colors.orange,
@@ -105,8 +110,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             builder: (BuildContext context, Widget child) {
               final Matrix4 transform = new Matrix4.identity()
                 ..scale(1.0, _backScale.value, 1.0);
-
-              _id = i;
 
               return new Transform(
                 transform: transform,
@@ -120,7 +123,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           onTap: () {
             setState(() {
               sid = i;
-
+              Random random = new Random();
+              y = random.nextInt(50);
               print('This id is tapped');
               print(sid);
 
@@ -139,7 +143,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             builder: (BuildContext context, Widget child) {
               final Matrix4 transform = new Matrix4.identity()
                 ..scale(1.0, _frontScale.value, 1.0);
-              _id = i;
+
               return new Transform(
                 transform: transform,
                 alignment: FractionalOffset.center,
@@ -154,18 +158,37 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return f(0);
   }
 }
 
-
-class RealHome extends StatelessWidget {
+class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(),
-      body: new Center(
+        body: new Center(
+            child: Column(children: <Widget>[
+      Container(
+        color: Colors.yellow[700],
+        height: 200,
+        child: Stack(children: <Widget>[
+          Image.network(
+            'https://i.ibb.co/Y08RLT9/win2.png',
+            fit: BoxFit.fill,
+          ),
+          Row(
+            children: <Widget>[
+              Center(
+                child: Text(
+                  '  Your Rewards \n   ',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+            ],
+          )
+        ]),
+      ),
+      Expanded(
         child: GridView.count(
             primary: false,
             padding: const EdgeInsets.all(20),
@@ -175,8 +198,16 @@ class RealHome extends StatelessWidget {
             children: <Widget>[
               MyHomePage(),
               MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
+              MyHomePage(),
             ]),
       ),
-    );
+    ])));
   }
 }
