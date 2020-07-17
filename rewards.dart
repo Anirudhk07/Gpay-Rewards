@@ -13,9 +13,7 @@ int _id = 0;
 int count = 0;
 int y;
 
-class MyHomePage extends StatefulWidget {
-  MyHomePageState createState() => new MyHomePageState();
-}
+
 
 class MyCustomCard extends StatelessWidget {
   MyCustomCard({this.colors, this.id});
@@ -63,6 +61,14 @@ class MyCustomCard extends StatelessWidget {
         ),
         child: Center(child: Text('Better Luck Next Time !')));
   }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePageState createState() => new MyHomePageState();
+
+  Function(String) callback;
+
+  MyHomePage(this.callback);
 }
 
 class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
@@ -127,7 +133,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               y = random.nextInt(50);
               print('This id is tapped');
               print(sid);
-
+              widget.callback(y.toString());
               if (_controller.isCompleted || _controller.velocity > 0)
                 _controller.reverse();
               else
@@ -162,7 +168,21 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 }
 
-class MyWidget extends StatelessWidget {
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+
+  String amount = '0';
+
+  callback(newAmount) {
+        setState(() {
+          amount = newAmount;
+        });
+      }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,6 +204,7 @@ class MyWidget extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
               ),
+              Text('You have won $amount')
             ],
           )
         ]),
@@ -196,16 +217,16 @@ class MyWidget extends StatelessWidget {
             mainAxisSpacing: 10,
             crossAxisCount: 2,
             children: <Widget>[
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
-              MyHomePage(),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
+              MyHomePage(callback),
             ]),
       ),
     ])));
